@@ -1,0 +1,146 @@
+Metadata-Version: 2.4
+Name: reconforge
+Version: 0.1.0
+Summary: AI-assisted reconnaissance and security posture reporting for modern web applications.
+Author: Rashida Alexander
+License: MIT
+Keywords: security,reconnaissance,reporting,python,web-security
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Information Technology
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.31.0
+Requires-Dist: beautifulsoup4>=4.12.3
+Requires-Dist: rich>=13.7.1
+Provides-Extra: dev
+Requires-Dist: pytest>=8.1.1; extra == "dev"
+Dynamic: license-file
+
+<div align="center">
+
+# ReconForge
+
+### AI-assisted reconnaissance and security posture reporting for modern web applications.
+
+![License](https://img.shields.io/badge/license-MIT-black)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![Status](https://img.shields.io/badge/status-runnable_v1-success)
+![Scope](https://img.shields.io/badge/scope-passive_recon-informational)
+
+</div>
+
+ReconForge is a polished, portfolio-ready security research project that discovers target metadata, evaluates basic security posture signals, and exports structured reports. It is designed to feel like a serious engineering system rather than a loose collection of scripts.
+
+## Why ReconForge
+
+- Clean CLI for discovery and scan workflows
+- Passive by default and safer to demonstrate publicly
+- JSON and Markdown report generation
+- Docker-ready local execution
+- Tests, CI, and architectural decision records included
+- Strong README structure and research-lab style presentation
+
+## System Architecture
+
+```text
+Target
+  |
+  v
+HTTP Collector
+  |
+  +--> Discovery Engine ----> Metadata Profile
+  |
+  +--> Scan Engine ---------> Security Posture Findings
+  |
+  v
+Report Renderer -----------> JSON / Markdown Output
+```
+
+## Features
+
+- **Target discovery**: collects status, title, content type, server information, and same-origin links.
+- **Technology hints**: infers likely frameworks from lightweight fingerprints.
+- **Security posture checks**: identifies missing defensive headers and common information disclosure signals.
+- **Report export**: saves structured findings to JSON and Markdown.
+- **Developer-ready packaging**: installable package, Dockerfile, test suite, and GitHub Actions workflow.
+
+## Quick Start
+
+### Local install
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .[dev]
+```
+
+### Discover a target
+
+```bash
+reconforge discover https://example.com --json-out reports/discovery.json
+```
+
+### Run a scan
+
+```bash
+reconforge scan https://example.com --json-out reports/findings.json --md-out reports/findings.md
+```
+
+## Docker
+
+```bash
+docker build -t reconforge .
+docker run --rm reconforge scan https://example.com
+```
+
+## Example Output
+
+```json
+{
+  "target": "https://example.com",
+  "final_url": "https://example.com",
+  "status_code": 200,
+  "findings": [
+    {
+      "severity": "medium",
+      "title": "Missing Content-Security-Policy header",
+      "details": "The response for https://example.com did not include Content-Security-Policy."
+    }
+  ]
+}
+```
+
+## Repository Layout
+
+```text
+reconforge/
+  cli/
+  core/
+  utils/
+tests/
+docs/
+  adr/
+examples/
+```
+
+## Engineering Notes
+
+Architecture decisions are tracked in `docs/adr/`.
+
+- `ADR-001-passive-scope.md`
+- `ADR-002-reporting-format.md`
+
+## Development
+
+```bash
+pytest
+```
+
+## License
+
+MIT

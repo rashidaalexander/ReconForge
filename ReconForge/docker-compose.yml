@@ -1,0 +1,4 @@
+services:
+  reconforge:
+    build: .
+    command: ["scan", "https://example.com", "--md-out", "/tmp/report.md"]
